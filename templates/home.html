@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h1 class="alert alert-warning">Welcome to the stellar based web transaction of Lumens</h1><br>
+<h3>To generate your TestNet user and keys please click below.</h3><br><br>
+
+<form action="/account/">
+	<button style="font-size: 20px;" class="btn btn-success">Create Users</button>
+</form><br><br><br>
+
+<p class="alert alert-info"><b>* Note:</b> Two accounts will be created as sender's & Receiver's with the default balance of 10000.0000000</p>
+
+{% endblock body %}

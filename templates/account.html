@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+{% if ibalance %}
+<form action="/account/">
+	<button style="font-size: 20px;" class="btn btn-primary">Back</button>
+</form><br><br><hr>
+<p><b>Sender's Initial Balance: </b>{{ ibalance.send_initial }}</p>
+<p><b>Receiver's Initial Balance: </b>{{ ibalance.receive_initial }}</p><hr>
+{% endif %}<br>
+
+{% if address %}
+<h1 class="alert alert-warning">Welcome to the stellar based web transaction of Lumens</h1><br>
+<h3>The following are the Sender's & Receiver's address randomly generated.</h3><br><br><hr>
+<p><b>Sender's Address: </b>{{ address.send_seed }}</p>
+<p><b>Receiver's Address: </b>{{ address.receive_publickey }}</p><hr><br>
+<form action="/balance/">
+	<button style="font-size: 20px;" class="btn btn-success">Check current balance</button>
+</form><br><br>
+{% endif %}
+
+<form action="/transfer/">
+	<!-- <input type="text" name="{% if cbalance %} {{ cbalance.amount }} {% endif %}" placeholder="Enter the amount (0-9998)"><br><br>	 -->
+	<button style="font-size: 20px;" class="btn btn-warning">Make Transaction of 500 XLM</button>
+</form><br>
+<p class="alert alert-info"><b>* Note:</b> For each Transaction made by sender an amount of 0.0000100 will be charged extra.</p>
+
+
+{% endblock body %}

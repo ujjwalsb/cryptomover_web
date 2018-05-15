@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block body %}
+
+<h3 class="alert alert-success">Balance of 500 has been Transferred successfully.</h3><br><br>
+
+{% if cbalance %}
+<form action="/account/">
+	<button style="font-size: 20px;" class="btn btn-primary">Back</button>
+</form><br><br><hr>
+<p><b>Sender's Current Balance: </b>{{ cbalance.send_current }}</p>
+<p><b>Receiver's Current Balance: </b>{{ cbalance.receive_current }}</p><hr>
+{% endif %}
+
+{% endblock body %}
