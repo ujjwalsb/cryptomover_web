@@ -4,7 +4,6 @@ from stellar_base.asset import Asset
 from stellar_base.memo import TextMemo
 from stellar_base.keypair import Keypair
 from stellar_base.address import Address
-from stellar_base.builder import Builder
 from stellar_base.operation import Payment
 from stellar_base.transaction import Transaction
 from stellar_base.horizon import horizon_testnet
@@ -62,9 +61,8 @@ def initial_balance():		# Generates the initial balance for both users.
 
 @app.route("/transfer/", methods=['POST'])
 def transaction():			# Performs the transaction from one to another thus providing the current balance.
-	amount = str(request.form['amount'])
-	# memo = TextMemo('Transaction Test')
-	memo = TextMemo(request.form['memo'])
+	amount = str(request.form['amount'])	# Amount taken from the user.
+	memo = TextMemo(request.form['memo'])	# Memo entered by user.
 
 	send = Keypair.from_seed(send_seed)
 	horizon = horizon_testnet()
