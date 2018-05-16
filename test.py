@@ -1,16 +1,10 @@
-import time
+test.pyimport time
 import requests
-from stellar_base.asset import Asset
-from stellar_base.memo import TextMemo
 from stellar_base.keypair import Keypair
 from stellar_base.address import Address
 from stellar_base.builder import Builder
-from stellar_base.operation import Payment
-from stellar_base.transaction import Transaction
-from stellar_base.horizon import horizon_testnet
-from stellar_base.transaction_envelope import TransactionEnvelope as Te
 
-from flask import Flask, render_template, redirect, request
+from flask import Flask, render_template, redirect
 
 app = Flask(__name__)
 
@@ -60,57 +54,23 @@ def initial_balance():		# Generates the initial balance for both users.
 	return render_template("account.html", ibalance=ibalance)
 
 
-@app.route("/transfer/", methods=['POST'])
+@app.route("/transfer/")
 def transaction():			# Performs the transaction from one to another thus providing the current balance.
-	amount = str(request.form['amount'])
-	# memo = TextMemo('Transaction Test')
-	memo = TextMemo(request.form['memo'])
-
-	send = Keypair.from_seed(send_seed)
-	horizon = horizon_testnet()
-	asset = Asset('XLM')
-
-	op = Payment({
-		'destination': receive_publickey,
-		'asset': asset,
-		'amount': amount,
-		})
-
-	sequence = horizon.account(send.address()).get('sequence')
-
-	tx = Transaction(
-		source = send.address().decode(),
-		opts = {
-			'sequence': sequence,
-			'memo': memo,
-			'fee': 100,
-			'operations': [
-				op,
-			],
-		},
-	)
-
-	envelope = Te(tx=tx, opts={"network_id": "TESTNET"})
-	envelope.sign(send)
-	xdr = envelope.xdr()
-	response = horizon.submit(xdr)
-
-	trans = response['_links']
-	for values in trans.itervalues():
-		for confirmation in values.itervalues():
-			confirm = confirmation
+	builder = Builder(secret=send_seed)
+	builder.append_payment_op(receive_publickey, '500', 'XLM')		# Assigning of Receiver address, amount & Asset.
+	builder.add_text_memo('testing')								# Assigning of a memo or remark.
+	builder.sign()
+	s = builder.submit()					# Submitting the result of the transaction.
 	address1.get()							# Receiving balance info in JSON format
 	address2.get()
 	for a1 in address1.balances:
 		send_current = a1['balance']		# Retrieving the eaxct balance info fron JSON.
 	for a2 in address2.balances:
-		receive_current = a2['balance']
+		receive_current = a2['balance']	
 
 	cbalance = {							# Current balance.
 		'send_current': send_current,
 		'receive_current': receive_current,
-		'confirm': confirm,
-		# 'amount': amount,
 	}
 	return render_template("transaction.html", cbalance=cbalance)
 

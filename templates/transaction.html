@@ -2,7 +2,7 @@
 
 {% block body %}
 
-<h3 class="alert alert-success">Balance of 500 has been Transferred successfully.</h3><br><br>
+<h3 class="alert alert-success">Balance has been Transferred successfully.</h3><br><br>
 
 {% if cbalance %}
 <form action="/account/">
@@ -11,5 +11,7 @@
 <p><b>Sender's Current Balance: </b>{{ cbalance.send_current }}</p>
 <p><b>Receiver's Current Balance: </b>{{ cbalance.receive_current }}</p><hr>
 {% endif %}
+<br><br>
+<h3 class="alert alert-success">Confirmation Link: <a href="{{ cbalance.confirm }}">{{ cbalance.confirm }}</a></h3><br><br>
 
 {% endblock body %}
