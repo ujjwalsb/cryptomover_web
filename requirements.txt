@@ -6,7 +6,7 @@ ed25519==1.4
 Flask==1.0.2
 idna==2.6
 itsdangerous==0.24
-Jinja2==2.10
+Jinja2==2.11.3
 MarkupSafe==1.0
 mnemonic==0.18
 numpy==1.14.3
